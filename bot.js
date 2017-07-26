@@ -82,6 +82,11 @@ if (process.env.MONGO_URI) {
     bot_options.json_file_store = __dirname + '/.data/db/'; // store user data in a simple JSON format
 }
 
+if (process.env.REDIS_URI) {
+    var redisStorage = require('botkit-storage-redis')({url: process.env.REDIS_URI, methods: ['threads']});
+    bot_options.storage = redisStorage
+}
+
 // Create the Botkit controller, which controls all instances of the bot.
 var controller = Botkit.slackbot(bot_options);
 
